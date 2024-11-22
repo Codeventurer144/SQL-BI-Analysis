@@ -132,10 +132,16 @@ ing.ing_weight,
 ing.ing_price
 ```
 
--	The “r.quantity AS recipe_quantity,” line in the query above returns the quantity of each ingredient in each recipe that has been ordered
--	The “SUM(o.quantity) AS order_quantity,” line in the query above returns the quantity of each recipe ordered
+-	The **“r.quantity AS recipe_quantity,”** line in the query above returns the quantity of each ingredient in each recipe that has been ordered
+-	The **“SUM(o.quantity) AS order_quantity,”** line in the query above returns the quantity of each recipe ordered
 
-From this result, the next thing to do would be to calculate the total cost of ingredients ordered or used so far. To do this I would need to get the unit cost for each ingredient through the ingredient weight and price already in the table above. However, the summed order_quantity in the orders table will hinder this because is already an aggregated field (SUM (o.quantity) as order_quantity), so it cannot be used in the same select statement. The solution is to use sub_queries (a select statement in a select statement) and save it as “s1”
+Below is the output of the calculations:
+Notice the new columns **recipe_quantity** and **order_quantity**.
+
+![](query_and_table2.png)
+
+From this result, the next thing to do would be to calculate the total cost of ingredients ordered or used so far. To do this I would need to get the unit cost for each ingredient through the ingredient weight and price already in the table above. However, the summed order_quantity in the orders table will hinder this because is already an aggregated field ***(SUM (o.quantity) as order_quantity)***, so it cannot be used in the same select statement. The solution is to use sub_queries (a select statement in a select statement) and save it as “s1”.
+
 ``` SQL
 SELECT* FROM (SELECT
 o.item_id,
@@ -161,7 +167,9 @@ ing.ing_name,
 ing.ing_weight,
 ing.ing_price) AS s1;
 ```
+
 s1 returns the same table so now I can query s1 to calculate the total cost of ingredients ordered or used so far by calculating the unit cost for each ingredient through the ingredient weight and price.
+
 ```SQL
 SELECT 
 s1.item_name,
@@ -198,11 +206,19 @@ ing.ing_name,
 ing.ing_weight,
 ing.ing_price) AS s1
 ```
-s1.order_quantity * s1.recipe_quantity AS ordered_weight,  >>> returns the multiplication of the quantity of items ordered by the quantity of ingredients in each item.
-s1.ing_price / s1.ing_weight AS unit_cost >>> returns the unit cost of each ingredient
-(s1.order_quantity * s1.recipe_quantity) * (s1.ing_price / s1.ing_weight) as ingredient_cost >>> returns the total cost of each ingredient used so far
+
+**s1.order_quantity * s1.recipe_quantity AS ordered_weight** returns the multiplication of the quantity of items ordered by the quantity of ingredients in each item.
+**s1.ing_price / s1.ing_weight AS unit_cost** returns the unit cost of each ingredient.
+**(s1.order_quantity * s1.recipe_quantity) * (s1.ing_price / s1.ing_weight) as ingredient_cost** returns the total cost of each ingredient used so far.
+
+Below is the output of  the query:
+Notice the new columns **ordered_weight**, **unit_cost**, and **ingredient_cost**
+
+![](query_and_table3.png)
+
 By this, I have been able to calculate, not only the Total Quantity by ingredients ordered, and the unit cost of each ingredient, but also the calculated cost of making each variety of Pizza by their ingredient quantity.
 But I still need to get the percentage stock remaining by ingredient in the inventory, and also the list of ingredients to re-order based on the remaining ingredients in the inventory. To do this, I made an entire view from the previous table using “CREATE VIEW” statement, saving the view as stock2 as seen in the query below:
+
 ```SQL
 CREATE VIEW stock2 AS SELECT 
 s1.item_name,
@@ -244,8 +260,9 @@ With this view, I would be calculating the following:
 -	The amount of ingredients in the Inventory
 -	The amount remaining per ingredient in the inventory
 
-Ordered weight
+**Ordered Weight**
 To get the total weight of ingredients ordered, I used this query:
+
 ```SQL
 SELECT
 ing_name,
@@ -253,6 +270,9 @@ SUM(ordered_weight) AS ordered_weight
 FROM stock2 
 GROUP BY ing_name
 ```
+
+
+
 The output above shows the total weight of ingredients in the inventory that have been used/ordered
 Amount of ingredients in the Inventory
 To calculate the amount of ingredients in the inventory I had to convert the query above to a sub-query AS ‘s2’ and then JOIN the ingredients and inventory tables to it:
