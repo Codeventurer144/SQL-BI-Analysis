@@ -1,4 +1,4 @@
-# Creating and Analysing Pizza Joint Database
+![image](https://github.com/user-attachments/assets/cfed908c-4e24-4632-946f-c18ff2d6949d)# Creating and Analysing Pizza Joint Database
 ![](pizzaBoxes.png)
 
 ## Introduction
@@ -323,7 +323,11 @@ Using Power BI, I connected to MySql and loaded the first table using the custom
 
 ![](visual1.png)
 
-
-
-
+![](visual2.png)
 </details>
+
+---
+
+## Findings
+<details>
+  <summary>Expand</summary>
