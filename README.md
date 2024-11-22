@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/cfed908c-4e24-4632-946f-c18ff2d6949d)# Creating and Analysing Pizza Joint Database
+# Creating and Analysing Pizza Joint Database
 ![](pizzaBoxes.png)
 
 ## Introduction
