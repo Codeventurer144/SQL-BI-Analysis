@@ -136,7 +136,6 @@ ing.ing_price
 -	The **“SUM(o.quantity) AS order_quantity,”** line in the query above returns the quantity of each recipe ordered
 
 Below is the output of the calculations:
-Notice the new columns **recipe_quantity** and **order_quantity**.
 
 ![](query_and_table2.png)
 
@@ -168,7 +167,7 @@ ing.ing_weight,
 ing.ing_price) AS s1;
 ```
 
-s1 returns the same table so now I can query s1 to calculate the total cost of ingredients ordered or used so far by calculating the unit cost for each ingredient through the ingredient weight and price.
+"s1" returns the same table so now I can query s1 to calculate the total cost of ingredients ordered or used so far by calculating the unit cost for each ingredient through the ingredient weight and price.
 
 ```SQL
 SELECT 
@@ -212,7 +211,6 @@ ing.ing_price) AS s1
 **(s1.order_quantity * s1.recipe_quantity) * (s1.ing_price / s1.ing_weight) as ingredient_cost** returns the total cost of each ingredient used so far.
 
 Below is the output of  the query:
-Notice the new columns **ordered_weight**, **unit_cost**, and **ingredient_cost**
 
 ![](query_and_table3.png)
 
@@ -255,6 +253,7 @@ ing.ing_name,
 ing.ing_weight,
 ing.ing_price) AS s1
 ```
+
 With this view, I would be calculating the following:
 -	The total weight ordered
 -	The amount of ingredients in the Inventory
@@ -271,11 +270,12 @@ FROM stock2
 GROUP BY ing_name
 ```
 
-
+![](query_and_table4.png)
 
 The output above shows the total weight of ingredients in the inventory that have been used/ordered
 Amount of ingredients in the Inventory
 To calculate the amount of ingredients in the inventory I had to convert the query above to a sub-query AS ‘s2’ and then JOIN the ingredients and inventory tables to it:
+
 ```SQL
 SELECT * FROM (SELECT
 ing_id,
@@ -286,7 +286,9 @@ stock2 GROUP BY ing_name, ing_id) AS s2
 LEFT JOIN inventory inv ON inv.item_id = s2.ing_id
 LEFT JOIN  ingredients ing ON ing.ing_id = s2.ing_id
 ```
-Finally, I wrote the query below to calculate the total weight of ingredients in the inventory and subtract the ordered ingredient weight from it to get the remaining weight in the inventory
+
+Finally, I wrote the query below to calculate the total weight of ingredients in the inventory and subtract the ordered ingredient weight from it to get the remaining weight in the inventory:
+
 ```SQL
 SELECT 
 s2.ing_name,
@@ -304,5 +306,24 @@ stock2 GROUP BY ing_name, ing_id) AS s2
 LEFT JOIN inventory inv ON inv.item_id = s2.ing_id
 LEFT JOIN  ingredients ing ON ing.ing_id = s2.ing_id
 ```
-- (ing.ing_weight * inv.quantity) AS total_inv_weight, >>> returns the total weight of ingredients in the inventory
-- (ing.ing_weight * inv.quantity) - s2.ordered_weight as remaining_weight >>> subtracts the ordered ingredients’ weight from the total ingredient weight in the inventory to get what is left in the inventory.
+
+- **(ing.ing_weight * inv.quantity) AS total_inv_weight** returns the total weight of ingredients in the inventory
+- **(ing.ing_weight * inv.quantity) - s2.ordered_weight as remaining_weight** subtracts the ordered ingredients’ weight from the total ingredient weight in the inventory to get what is left in the inventory.
+
+![](query_and_table5.png)
+</details>
+
+---
+
+### Visualizations
+<details>
+  <summary>Expand</summary>
+  
+Using Power BI, I connected to MySql and loaded the first table using the custom query method. I still had to calculate some columns to create the desired visualizations. Below are the Visualizations answering the first Ten questions and the last Four questions in the [Scenario](#Scenario) above:
+
+![](visual1.png)
+
+
+
+
+</details>
