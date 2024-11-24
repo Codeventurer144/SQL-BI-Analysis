@@ -1,42 +1,43 @@
-# Creating and Analysing Pizza Joint Database
+# Creating and Analyzing a Pizza Joint Database
 ![](pizzaBoxes.png)
 
 ## Introduction
-In this project, I used Microsoft Excel, DrawSQL, MySQL workbench, Power Query Editor and Microsoft Power BI to respectively normalize spreadsheet data, design a database and generate ‘CREATE statements’ for the actual database, join and analyze tables, and visualize certain patterns and insights from the tables.
+In this project, I used Microsoft Excel, DrawSQL, MySQL Workbench, Power Query Editor, and Microsoft Power BI to normalize spreadsheet data, design a database, generate SQL `CREATE` statements, join and analyze tables, and visualize patterns and insights from the data.
 
 ## Data Sourcing and Description
-The tables used were sourced from Kaggle.com in this page (https://www.kaggle.com/datasets/jaspearson/pizzeria-data-for-4-weeks) which contains seven CSV files; each containing information about a Pizzeria. They are not real-world datasets as the owner who published them stated that they are AI-generated. Initially, when opened in MS Excel, the CSV files were not suitable enough for this project as they were not well normalized for SQL querying. For one, their “id” values were not consistent with those in the other tables. Thankfully, using Microsoft Excel functions, the data was normalized and excess data in each file was deleted. The names and descriptions of the resulting normalized Excel files are in the scenario below.
+The data was sourced from Kaggle.com via [this page](https://www.kaggle.com/datasets/jaspearson/pizzeria-data-for-4-weeks), which contains seven CSV files about a pizzeria. The datasets are AI-generated, as stated by the publisher, and not based on real-world data. Initially, the CSV files were unsuitable for SQL querying due to poor normalization and inconsistent "id" values. Using Microsoft Excel functions, I normalized the data and removed unnecessary fields. The details of the resulting normalized Excel files are described in the scenario below.
 
 ## Scenario
-A client, Samuel Roberts, is opening a new international Pizza delivery shop. It would not be a dining but just a delivery/pickup shop. He has asked me to make a database that would allow him to capture and store all the important information and data the business generates. This will help him monitor business performance in dashboards that I will be building using Microsoft Power BI. Robert’s major area of focus is in the Orders and Stock information. He wants to know the following.
-1.	What are the ***Total Orders*** we’ve gotten so far?
-2.	I need to know our ***Total Sales*** so far.
-3.	I need a summary of the ***Total Items*** sold.
-4.	What is our ***Average Order*** value.
-5.	Give me info on our ***Sales by Category*** too (you know…how much money we’ve made from each Pizza category).
-6.	What are our ***top selling items***?
-7.	How many ***orders*** do we get each ***hour***?
-8.	How much ***sales*** do we make each ***hour***?
-9.	I want to know how much ***orders*** we get from each ***address***
-10.	What are our ***orders by delivery/pick up***?
-11.	What is the ***total quantity by ingredients*** sold?
-12.	What is the ***total cost of each ingredients***?
-13.	What is the ***calculated cost of each pizza***?
-14.	What is the ***percentage of stock remaining by ingredients*** in inventory?
+A client, Samuel Roberts, is opening an international pizza delivery shop. The shop will focus exclusively on delivery and pickup services. He requested a database to capture and store essential business data. This database will help him monitor performance through dashboards I’ll create using Microsoft Power BI. Samuel's focus areas are **Orders** and **Stock Information**. His requirements include the following:
 
-To this effect, I asked him for the following data below which he had stored in MS Excel sheets. The table below contains information on the spreadsheet names, the number of columns and the information they hold:
+1. Total Orders so far.
+2. Total Sales so far.
+3. Summary of Total Items sold.
+4. Average Order value.
+5. Sales by Category (e.g., revenue from each pizza category).
+6. Top Selling Items.
+7. Orders per hour.
+8. Sales per hour.
+9. Orders by Address.
+10. Orders by Delivery/Pickup.
+11. Total Quantity by Ingredients sold.
+12. Total Cost of each Ingredient.
+13. Calculated Cost of each Pizza.
+14. Percentage of Stock Remaining by Ingredient.
 
-Excel tables | Col. No. | Content description
-:-------------:|:------:|:----------------------------------
-orders.xlsx | 8 | contains information on the time of orders, the quantity of items ordered by each customer, and whether the order was delivered
-items.xlsx | 6 | contains information on pizza names, categories, sizes and prices
-customers.xlsx | 3 | contains customers’ first and last names
-address.xlsx | 3 | contains each customer’s delivery address and city
-recipe.xlsx | 4 | contains information on the ingredients in each item/pizza and the quantity ordered
-ingredients.xlsx | 5 | contains the name, weight, mass_measurement_unit, and price of each ingredient
-inventory.xlsx | 3 | Contains the quantity of items that were in the inventory
+I collected the following data from Samuel in Excel sheets:
 
-Luckily for me, the Excel tables were perfectly normalized for querying in MySQL Workbench (i.e. after I normalized them in real life 😅), which I used to execute SQL queries on the database
+| **Excel Table** | **Col. No.** | **Content Description**                                   |
+|:---------------:|:------------:|:--------------------------------------------------------|
+| orders.xlsx     | 8            | Time of orders, item quantities, and delivery status.   |
+| items.xlsx      | 6            | Pizza names, categories, sizes, and prices.            |
+| customers.xlsx  | 3            | Customers’ first and last names.                       |
+| address.xlsx    | 3            | Customers’ delivery addresses and cities.              |
+| recipe.xlsx     | 4            | Ingredients in each pizza and their quantities.        |
+| ingredients.xlsx| 5            | Ingredient names, weights, units, and prices.          |
+| inventory.xlsx  | 3            | Quantity of items in stock.                            |
+
+After normalization, the Excel tables were prepared for querying in MySQL Workbench.
 
 ## Methodology
 
@@ -46,13 +47,13 @@ Luckily for me, the Excel tables were perfectly normalized for querying in MySQL
 <details>
   <summary>Expand</summary>
 
-I used the DrawSQL app to design the database and generate the Data Definition Language (DDL) to be run in MySQL workbench. The database was saved as “pizzeria”.
+I used DrawSQL to design the database and generate the DDL for MySQL Workbench. The database was named `pizzeria`.
 
 ![](database_diagram.png)
 
-[View the database design from its source](https://drawsql.app/teams/eniifeoluwa/diagrams/pizza-db)
+- [View the database design](https://drawsql.app/teams/eniifeoluwa/diagrams/pizza-db)
+- [View the DDL script](DDL_for_Pizzeria.sql)
 
-[View the DDL used to CREATE the database](DDL_for_Pizzeria.sql)
 </details>
 
 ---
@@ -61,38 +62,26 @@ I used the DrawSQL app to design the database and generate the Data Definition L
 <details>
   <summary>Expand</summary>
 
-For the first Power Bi dashboard where I need to visualize the following below:
--	Total orders
--	Total sales
--	Total items
--	Average order value
--	Sales by Category
--	Top selling items
--	Orders by hour
--	Sales by hour
--	Order by address
--	Orders by delivery/pick up
+#### Visualizations for the First Power BI Dashboard
+To create visualizations answering questions like **Total Orders**, **Total Sales**, and **Sales by Category**, I wrote the following SQL query:
 
-I wrote the SQL query below in which I used table Aliases ‘o.’, ‘i.’ and ‘a.’ to represent the ***orders***, ***items*** and ***address*** tables respectively so that I can select the necessary columns from each of them and JOIN them to form the table I will be using for the first visualization
-
-**The following, SQL query and resulting table are as follows:**
-
-```SQL
+```sql
 USE Pizzeria;
 SELECT
-o.order_id,
-i.item_price,
-o.quantity,
-i.item_cat,
-i.item_name,
-o.created_at,
-a.delivery_address1,
-a.delivery_city,
-o.delivery
+    o.order_id,
+    i.item_price,
+    o.quantity,
+    i.item_cat,
+    i.item_name,
+    o.created_at,
+    a.delivery_address1,
+    a.delivery_city,
+    o.delivery
 FROM orders o
 LEFT JOIN items i ON o.item_id = i.item_id
-LEFT JOIN address a ON o.add_id = a.add_id
+LEFT JOIN address a ON o.add_id = a.add_id;
 ```
+
 ![](query_and_table1.png)
 
 ---
@@ -331,3 +320,24 @@ Using Power BI, I connected to MySql and loaded the first table using the custom
 ## Findings
 <details>
   <summary>Expand</summary>
+
+Disclaimer: Before going into the findings it is important to reiterate that the data used for this project is purely AI-generated and thus some findings might not appear logical.
+
+From the first page of visualizations, the following insights were discovered:
+
+![](visual1.png)
+
+- The shop has processed a total of 118 orders within the first two months of operation, averaging 2 orders per day.
+- Despite modest sales numbers, the shop has achieved $14,000 in revenue, with an average of $120 per order. This indicates that customers are willing to spend significantly on each order, suggesting high customer satisfaction and a strong product offering.
+- 669 items, including sides and drinks, have been sold. This highlights the diversity of the shop's offerings, with customers purchasing a wide range of menu items.
+- Analysis from the doughnut chart reveals that Pizza is the most popular item, likely due to the higher price point of beverages and sides, which customers might find more affordable elsewhere.
+- The bar chart indicates a strong preference for Pesto and Veggie Pizzas, among other varieties, suggesting these are customer favorites.
+- The pie chart illustrates that delivery orders significantly outnumber pickup orders, pointing to a preference for the convenience of delivery.
+- Sales trends from the line chart show a peak in orders between 7 PM and 10 PM, a likely result of customers ordering after returning from work. Sales then sharply decline towards midnight, reflecting the end of the evening demand.
+- The map visualization shows that our customer base is well distributed across the U.S., with a denser concentration near our headquarters in Maryland, reinforcing the regional appeal of the shop.
+
+![](visual2.png)
+
+- The inventory visualization reveals that most items are well-stocked, with approximately 95% availability, indicating efficient inventory management.
+- Donair Meat and Mozzarella Cheese are low in stock, each below 50%, indicating a need for replenishment soon to meet ongoing demand.
+- The Pizza Dough inventory shows a -222% remaining stock, which suggests a data error or issue with inventory tracking. This negative percentage could have been caused by a miscount or misrecording of inventory movements, possibly due to an incorrect initial stock input or unaccounted sales. It is recommended to review and adjust the inventory records to ensure accuracy.
