@@ -2,7 +2,7 @@
 ![](pizzaBoxes.png)
 
 ## Introduction
-In this project, I used Microsoft Excel, DrawSQL, MySQL Workbench, Power Query Editor, and Microsoft Power BI to normalize spreadsheet data, design a database, generate SQL `CREATE` statements, join and analyze tables, and visualize patterns and insights from the data.
+In this project, I used Microsoft Excel, DrawSQL, MySQL Workbench, Power Query Editor, and Microsoft Power BI to normalize spreadsheet data, design a database, generate SQL `CREATE` statements, join and analyze tables, and visualize patterns and insights from the data. I also provided recommendations from the analysis at the end of this project.
 
 ## Data Sourcing and Description
 The data was sourced from Kaggle.com via [this page](https://www.kaggle.com/datasets/jaspearson/pizzeria-data-for-4-weeks), which contains seven CSV files about a pizzeria. The datasets are AI-generated, as stated by the publisher, and not based on real-world data. Initially, the CSV files were unsuitable for SQL querying due to poor normalization and inconsistent "id" values. Using Microsoft Excel functions, I normalized the data and removed unnecessary fields. The details of the resulting normalized Excel files are described in the scenario below.
@@ -14,7 +14,7 @@ A client, Samuel Roberts, is opening an international pizza delivery shop. The s
 2. Total Sales so far.
 3. Summary of Total Items sold.
 4. Average Order value.
-5. Sales by Category (e.g., revenue from each pizza category).
+5. Sales by Category (the revenue from each pizza category).
 6. Top Selling Items.
 7. Orders per hour.
 8. Sales per hour.
@@ -37,7 +37,7 @@ I collected the following data from Samuel in Excel sheets:
 | ingredients.xlsx| 5            | Ingredient names, weights, units, and prices.          |
 | inventory.xlsx  | 3            | Quantity of items in stock.                            |
 
-After normalization, the Excel tables were prepared for querying in MySQL Workbench.
+📌 After normalization, the Excel tables were ready for querying in MySQL Workbench.
 
 ## Methodology
 
@@ -51,7 +51,7 @@ I used DrawSQL to design the database and generate the DDL for MySQL Workbench. 
 
 ![](database_diagram.png)
 
-- [View the database design](https://drawsql.app/teams/eniifeoluwa/diagrams/pizza-db)
+- [View my database design from DrawSQL webpage](https://drawsql.app/teams/eniifeoluwa/diagrams/pizza-db)
 - [View the DDL script](DDL_for_Pizzeria.sql)
 
 </details>
@@ -62,7 +62,7 @@ I used DrawSQL to design the database and generate the DDL for MySQL Workbench. 
 <details>
   <summary>Expand</summary>
 
-#### Visualizations for the First Power BI Dashboard
+#### joining the Table for the First Power BI Dashboard
 To create visualizations answering questions like **Total Orders**, **Total Sales**, and **Sales by Category**, I wrote the following SQL query:
 
 ```sql
@@ -86,14 +86,14 @@ LEFT JOIN address a ON o.add_id = a.add_id;
 
 ---
 
-For the second Power BI dashboard, I would be creating a new table that would make it easier to calculate how much of the inventory the Pizza shop has used, and then identify how much of the ingredients in the inventory needs reordering. But since the inventory table only has information on the different items, I would need to JOIN the items and ingredients tables with it so that I can calculate the total ingredients in the inventory by knowing how much of an ingredient is in an item. This would mean calculating how much each type of pizza/item costs to make based on the cost of the ingredients. I will therefore need a query to reveal the following:
+For the second Power BI dashboard, I plan to create a new table to streamline calculations for tracking inventory usage and identifying which ingredients require reordering. Since the inventory table lacks detailed information about the items, I will need to JOIN the items and ingredients tables with it. This will allow me to calculate the total quantity of ingredients available by determining the amount of each ingredient used in each item. Additionally, I will calculate the production cost for each type of pizza/item based on the cost of its ingredients. To achieve these objectives, the query must include the following insights:
 
 1.	Total quantity by ingredient
 2.	Total cost of ingredients
 3.	Calculated cost of pizza
 4.	Percentage stock remaining by ingredient
 
-Firstly, to get the ***Total quantity by ingredient***, I needed to know how many orders there are, and then multiply the number of orders for each item by the quantity of each ingredient in each recipe ordered.
+To calculate the **Total Quantity by Ingredient***, I first determined the total number of orders. Then, I multiplied the quantity of orders for each item by the corresponding quantity of each ingredient used in its recipe.
 
 ```SQL
 SELECT
@@ -124,7 +124,7 @@ ing.ing_price
 -	The **“r.quantity AS recipe_quantity,”** line in the query above returns the quantity of each ingredient in each recipe that has been ordered
 -	The **“SUM(o.quantity) AS order_quantity,”** line in the query above returns the quantity of each recipe ordered
 
-Below is the output of the calculations:
+Below is the output of the query and calculations:
 
 ![](query_and_table2.png)
 
@@ -156,8 +156,7 @@ ing.ing_weight,
 ing.ing_price) AS s1;
 ```
 
-"s1" returns the same table so now I can query s1 to calculate the total cost of ingredients ordered or used so far by calculating the unit cost for each ingredient through the ingredient weight and price.
-
+The subquery **"s1"** returns the same table, allowing me to calculate the total cost of ingredients used so far. This is achieved by determining the unit cost of each ingredient based on its weight and price.
 ```SQL
 SELECT 
 s1.item_name,
@@ -199,12 +198,12 @@ ing.ing_price) AS s1
 **s1.ing_price / s1.ing_weight AS unit_cost** returns the unit cost of each ingredient.
 **(s1.order_quantity * s1.recipe_quantity) * (s1.ing_price / s1.ing_weight) as ingredient_cost** returns the total cost of each ingredient used so far.
 
-Below is the output of  the query:
+Below is the output of the query:
 
 ![](query_and_table3.png)
 
-By this, I have been able to calculate, not only the Total Quantity by ingredients ordered, and the unit cost of each ingredient, but also the calculated cost of making each variety of Pizza by their ingredient quantity.
-But I still need to get the percentage stock remaining by ingredient in the inventory, and also the list of ingredients to re-order based on the remaining ingredients in the inventory. To do this, I made an entire view from the previous table using “CREATE VIEW” statement, saving the view as stock2 as seen in the query below:
+By this point, I have successfully calculated not only the **Total Quantity by Ingredients** ordered and the **Unit Cost** of each ingredient, but also the Calculated Cost of producing each type of pizza based on its ingredient composition.
+However, further analysis is required to determine the **Percentage Stock Remaining by Ingredient** in the inventory and generate a list of ingredients that need reordering. To accomplish this, I created a View from the previous table using the CREATE VIEW statement, naming it ***stock2***. Below is the query I used to create this view:
 
 ```SQL
 CREATE VIEW stock2 AS SELECT 
@@ -261,9 +260,9 @@ GROUP BY ing_name
 
 ![](query_and_table4.png)
 
-The output above shows the total weight of ingredients in the inventory that have been used/ordered
-Amount of ingredients in the Inventory
-To calculate the amount of ingredients in the inventory I had to convert the query above to a sub-query AS ‘s2’ and then JOIN the ingredients and inventory tables to it:
+📌 The output above highlights the **total weight of ingredients** in the inventory that have been used or ordered so far.
+
+To determine the total amount of ingredients available in the inventory, I modified the earlier query into a subquery (aliased as **'s2'**) and then performed a JOIN operation with the ingredients and inventory tables. This approach allowed me to integrate the necessary information to calculate the available quantities of each ingredient in the inventory. The query is as follows:
 
 ```SQL
 SELECT * FROM (SELECT
@@ -308,7 +307,7 @@ LEFT JOIN  ingredients ing ON ing.ing_id = s2.ing_id
 <details>
   <summary>Expand</summary>
   
-Using Power BI, I connected to MySql and loaded the first table using the custom query method. I still had to calculate some columns to create the desired visualizations. Below are the Visualizations answering the first Ten questions and the last Four questions in the [Scenario](#Scenario) above:
+Using Power BI, I connected to MySql and loaded the first table using the custom query method. I still had to calculate some columns to create the desired visualizations. Below are the Visualizations answering the first Ten questions and the last Four questions in the [Scenario](#Scenario):
 
 ![](visual1.png)
 
@@ -321,7 +320,7 @@ Using Power BI, I connected to MySql and loaded the first table using the custom
 <details>
   <summary>Expand</summary>
 
-Disclaimer: Before going into the findings it is important to reiterate that the data used for this project is purely AI-generated and thus some findings might not appear logical.
+Disclaimer: Before going into the findings it is important to reiterate that the data used for this project was AI-generated. As such, certain insights or results may not align with typical real-world expectations and should be interpreted accordingly🙏.
 
 From the first page of visualizations, the following insights were discovered:
 
@@ -329,10 +328,10 @@ From the first page of visualizations, the following insights were discovered:
 
 - The shop has processed a total of 118 orders within the first two months of operation, averaging 2 orders per day.
 - Despite modest sales numbers, the shop has achieved $14,000 in revenue, with an average of $120 per order. This indicates that customers are willing to spend significantly on each order, suggesting high customer satisfaction and a strong product offering.
-- 669 items, including sides and drinks, have been sold. This highlights the diversity of the shop's offerings, with customers purchasing a wide range of menu items.
-- Analysis from the doughnut chart reveals that Pizza is the most popular item, likely due to the higher price point of beverages and sides, which customers might find more affordable elsewhere.
+- 669 items, including sides and drinks🍟🧃, have been sold. 
+- However, analysis from the doughnut chart reveals that the Pizzas, of all the items, are the most popular and ordered; likely due to the higher price point of beverages and sides, which customers might find more affordable elsewhere.
 - The bar chart indicates a strong preference for Pesto and Veggie Pizzas, among other varieties, suggesting these are customer favorites.
-- The pie chart illustrates that delivery orders significantly outnumber pickup orders, pointing to a preference for the convenience of delivery.
+- The pie🥧 chart illustrates that delivery orders significantly outnumber pickup orders, pointing to a preference for the convenience of delivery.
 - Sales trends from the line chart show a peak in orders between 7 PM and 10 PM, a likely result of customers ordering after returning from work. Sales then sharply decline towards midnight, reflecting the end of the evening demand.
 - The map visualization shows that our customer base is well distributed across the U.S., with a denser concentration near our headquarters in Maryland, reinforcing the regional appeal of the shop.
 
@@ -341,44 +340,47 @@ From the first page of visualizations, the following insights were discovered:
 ![](visual2.png)
 
 - The inventory visualization reveals that most items are well-stocked, with approximately 95% availability, indicating efficient inventory management.
-- Donair Meat and Mozzarella Cheese are low in stock, each below 50%, indicating a need for replenishment soon to meet ongoing demand.
-- The Pizza Dough inventory shows a -222% remaining stock, which suggests a data error or issue with inventory tracking. This negative percentage could have been caused by a miscount or misrecording of inventory movements, possibly due to an incorrect initial stock input or unaccounted sales. It is recommended to review and adjust the inventory records to ensure accuracy.
-
+- Donair Meat and Mozzarella Cheese are however low in stock, each below 50%, indicating a need for replenishment soon to meet ongoing demand.
+- The Pizza Dough inventory shows a -222% remaining stock, which suggests an issue with inventory tracking. This negative percentage could have been caused by a miscount of inventory movements, possibly due to an incorrect initial stock input or **unaccounted sales**.
 
 ## Recommendations
+
 1. Increase Order Frequency
 Given the low average of 2 orders per day, the business should consider strategies to increase customer engagement and frequency. This could be achieved through:
 
-Loyalty Programs: Implementing a rewards or loyalty program to incentivize repeat orders.
-Promotions and Discounts: Offering targeted promotions, like "Buy One, Get One Free" deals, could attract more customers during slower periods.
-Seasonal or Special Offers: Introducing time-limited offers or special pizza varieties can create urgency and boost sales.
+- Loyalty Programs: Implementing a rewards or loyalty program to incentivize repeat orders.
+- Promotions and Discounts: Offering targeted promotions, like "Buy One, Get One Free" deals, could attract more customers during slower periods.
+- Seasonal or Special Offers: Introducing time-limited offers or special pizza varieties can create urgency and boost sales.
+
 2. Focus on High-Value Items
 The average order value of $120 suggests that customers are willing to spend more on higher-quality items. The shop should:
-
-Highlight Popular Pizzas: Since Pesto and Veggie pizzas are customer favorites, these should be marketed more aggressively, possibly as premium options or featured in meal bundles.
-Promote Sides and Beverages: Although beverages and sides are less popular, introducing combo deals or highlighting high-margin items could increase their sales without affecting the pizza's dominance.
+- Highlight Popular Pizzas: Since Pesto and Veggie pizzas are customer favorites, these should be marketed more aggressively, possibly as premium options or featured in meal bundles.
+- Promote Sides and Beverages: Although beverages and sides are less popular, introducing combo deals or highlighting high-margin items could increase their sales without affecting the pizza's dominance.
 3. Optimize Delivery Services
 With deliveries outnumbering pickups, there may be an opportunity to enhance the delivery experience:
 
-Improve Delivery Efficiency: Ensure fast and reliable delivery by partnering with logistics companies or investing in a dedicated delivery team.
-Delivery Discounts: Offering discounts or free delivery over a certain order amount could attract more customers and increase average order size.
+3. Improve Delivery Efficiency: Ensure fast and reliable delivery by partnering with logistics companies or investing in a dedicated delivery team.
+- Delivery Discounts: Offering discounts or free delivery over a certain order amount could attract more customers and increase average order size.
+
 4. Stock Management and Replenishment
 As Donair Meat and Mozzarella Cheese are below 50% stock, it’s essential to:
 
-Establish Stock Replenishment Alerts: Set up automatic inventory alerts when key ingredients reach a low threshold, ensuring that these items are restocked on time.
-Track Ingredient Usage: Implement a more robust inventory tracking system to prevent stockouts and negative percentage values, such as the issue with pizza dough.
+- Establish Stock Replenishment Alerts: Set up automatic inventory alerts when key ingredients reach a low threshold, ensuring that these items are restocked on time.
+- Track Ingredient Usage: Implement a more robust inventory tracking system to prevent stockouts and negative percentage values, such as the issue with pizza dough.
+
 5. Utilize Data to Improve Operations
 The line chart showing peak sales between 7 PM and 10 PM indicates a predictable pattern of demand. The shop could:
 
-Staffing Adjustments: Ensure that staffing is optimized during peak hours to handle increased demand without causing delays.
-Targeted Marketing: Run time-based promotions, such as discounts or bundle deals for customers ordering during these high-demand periods.
+- Ensure that staffing is optimized during peak hours to handle increased demand without causing delays.
+- Run time-based promotions, such as discounts or bundle deals for customers ordering during these high-demand periods.
+
 6. Inventory Analysis and Adjustments
 The negative stock issue with pizza dough (-222%) highlights a need for:
+- Better Data Validation: Review and refine inventory processes to prevent future discrepancies, possibly by conducting more frequent stock checks or introducing barcode scanning.
+- Cross-check with Sales: Compare inventory data with sales logs to identify any inconsistencies between actual ingredient usage and recorded stock levels.
 
-Better Data Validation: Review and refine inventory processes to prevent future discrepancies, possibly by conducting more frequent stock checks or introducing barcode scanning.
-Cross-Check with Sales: Compare inventory data with sales logs to identify any inconsistencies between actual ingredient usage and recorded stock levels.
 7. Geographic Targeting
-Given that the customer base is well-distributed across the U.S., but denser near the headquarters in Maryland, consider:
+Given that the customer base is well-distributed across the U.S., but denser near the headquarters in Maryland:
 
 Localized Marketing Campaigns: Tailoring campaigns based on regional preferences can help boost sales in areas with lower engagement.
 Expand Delivery Network: If possible, explore expanding the delivery radius to cover underserved areas while maintaining cost-efficiency.
