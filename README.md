@@ -317,8 +317,6 @@ Using Power BI, I connected to MySql and loaded the first table using the custom
 ![](visual2.png)
 </details>
 
----
-
 </details>
 
 
