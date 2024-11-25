@@ -2,7 +2,7 @@
 ![](pizzaBoxes.png)
 
 ## Introduction
-In this project, I used Microsoft Excel, DrawSQL, MySQL Workbench, Power Query Editor, and Microsoft Power BI to normalize spreadsheet data, design a database, generate SQL `CREATE` statements, join and analyze tables, and visualize patterns and insights from the data. I also provided recommendations from the analysis at the end of this project.
+In this project, I used Microsoft Excel, DrawSQL, MySQL Workbench, Power Query Editor, and Microsoft Power BI to normalize spreadsheet data, design a database, generate SQL `CREATE` statements, join and analyze tables, and visualize patterns and insights from the data respectively. I also provided recommendations from the final analysis at the end of this project.
 
 ## Data Sourcing and Description
 The data was sourced from Kaggle.com via [this page](https://www.kaggle.com/datasets/jaspearson/pizzeria-data-for-4-weeks), which contains seven CSV files about a pizzeria. The datasets are AI-generated, as stated by the publisher, and not based on real-world data. Initially, the CSV files were unsuitable for SQL querying due to poor normalization and inconsistent "id" values. Using Microsoft Excel functions, I normalized the data and removed unnecessary fields. The details of the resulting normalized Excel files are described in the scenario below.
@@ -348,40 +348,34 @@ From the first page of visualizations, the following insights were discovered:
 1. Increase Order Frequency
 Given the low average of 2 orders per day, the business should consider strategies to increase customer engagement and frequency. This could be achieved through:
 
-- Loyalty Programs: Implementing a rewards or loyalty program to incentivize repeat orders.
-- Promotions and Discounts: Offering targeted promotions, like "Buy One, Get One Free" deals, could attract more customers during slower periods.
-- Seasonal or Special Offers: Introducing time-limited offers or special pizza varieties can create urgency and boost sales.
+  - Loyalty Programs: Implementing a rewards or loyalty program to incentivize repeat orders.
+  - Promotions and Discounts: Offering targeted promotions, like "Buy One, Get One Free" deals, could attract more customers during slower periods.
+  - Seasonal or Special Offers: Introducing time-limited offers or special pizza varieties can create urgency and boost sales.
 
 2. Focus on High-Value Items
 The average order value of $120 suggests that customers are willing to spend more on higher-quality items. The shop should:
-- Highlight Popular Pizzas: Since Pesto and Veggie pizzas are customer favorites, these should be marketed more aggressively, possibly as premium options or featured in meal bundles.
-- Promote Sides and Beverages: Although beverages and sides are less popular, introducing combo deals or highlighting high-margin items could increase their sales without affecting the pizza's dominance.
+  - Highlight Popular Pizzas: Since Pesto and Veggie pizzas are customer favorites, these should be marketed more aggressively, possibly as premium options or featured in meal bundles.
+  - Promote Sides and Beverages: Although beverages and sides are less popular, introducing combo deals or highlighting high-margin items could increase their sales without affecting the pizza's dominance.
+
 3. Optimize Delivery Services
 With deliveries outnumbering pickups, there may be an opportunity to enhance the delivery experience:
-
-3. Improve Delivery Efficiency: Ensure fast and reliable delivery by partnering with logistics companies or investing in a dedicated delivery team.
-- Delivery Discounts: Offering discounts or free delivery over a certain order amount could attract more customers and increase average order size.
+  - Improve Delivery Efficiency: Ensure fast and reliable delivery by partnering with logistics companies or investing in a dedicated delivery team.
+  - Delivery Discounts: Offering discounts or free delivery over a certain order amount could attract more customers and increase average order size.
 
 4. Stock Management and Replenishment
 As Donair Meat and Mozzarella Cheese are below 50% stock, it’s essential to:
-
-- Establish Stock Replenishment Alerts: Set up automatic inventory alerts when key ingredients reach a low threshold, ensuring that these items are restocked on time.
-- Track Ingredient Usage: Implement a more robust inventory tracking system to prevent stockouts and negative percentage values, such as the issue with pizza dough.
+  - Establish Stock Replenishment Alerts: Set up automatic inventory alerts when key ingredients reach a low threshold, ensuring that these items are restocked on time.
+  - Track Ingredient Usage: Implement a more robust inventory tracking system to prevent stockouts and negative percentage values, such as the issue with pizza dough.
 
 5. Utilize Data to Improve Operations
 The line chart showing peak sales between 7 PM and 10 PM indicates a predictable pattern of demand. The shop could:
-
-- Ensure that staffing is optimized during peak hours to handle increased demand without causing delays.
-- Run time-based promotions, such as discounts or bundle deals for customers ordering during these high-demand periods.
+  - Ensure that staffing is optimized during peak hours to handle increased demand without causing delays.
+  - Run time-based promotions, such as discounts or bundle deals for customers ordering during these high-demand periods.
 
 6. Inventory Analysis and Adjustments
 The negative stock issue with pizza dough (-222%) highlights a need for:
-- Better Data Validation: Review and refine inventory processes to prevent future discrepancies, possibly by conducting more frequent stock checks or introducing barcode scanning.
-- Cross-check with Sales: Compare inventory data with sales logs to identify any inconsistencies between actual ingredient usage and recorded stock levels.
+  - Better Data Validation: Review and refine inventory processes to prevent future discrepancies, possibly by conducting more frequent stock checks or introducing barcode scanning.
+  - Cross-check with Sales: Compare inventory data with sales logs to identify any inconsistencies between actual ingredient usage and recorded stock levels.
 
-7. Geographic Targeting
-Given that the customer base is well-distributed across the U.S., but denser near the headquarters in Maryland:
-
-Localized Marketing Campaigns: Tailoring campaigns based on regional preferences can help boost sales in areas with lower engagement.
-Expand Delivery Network: If possible, explore expanding the delivery radius to cover underserved areas while maintaining cost-efficiency.
-By following these recommendations, the business could increase both customer retention and overall sales, while streamlining its operations for better efficiency and customer satisfaction.
+7. Geographic Targeting 🌎:
+Given that the customer base is well-distributed across the U.S., but denser near the headquarters in Maryland, organizing campaigns based on regional preferences can help promote sales in areas with lower engagement.
