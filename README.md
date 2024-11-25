@@ -53,7 +53,7 @@ I used DrawSQL to design the database and generate the DDL for MySQL Workbench. 
 
 - [View my database design from DrawSQL webpage](https://drawsql.app/teams/eniifeoluwa/diagrams/pizza-db)
 - [View the DDL script](DDL_for_Pizzeria.sql)
-
+  <summary>collapse</summary>
 </details>
 
 ---
@@ -157,6 +157,7 @@ ing.ing_price) AS s1;
 ```
 
 The subquery **"s1"** returns the same table, allowing me to calculate the total cost of ingredients used so far. This is achieved by determining the unit cost of each ingredient based on its weight and price.
+
 ```SQL
 SELECT 
 s1.item_name,
@@ -343,7 +344,13 @@ From the first page of visualizations, the following insights were discovered:
 - Donair Meat and Mozzarella Cheese are however low in stock, each below 50%, indicating a need for replenishment soon to meet ongoing demand.
 - The Pizza Dough inventory shows a -222% remaining stock, which suggests an issue with inventory tracking. This negative percentage could have been caused by a miscount of inventory movements, possibly due to an incorrect initial stock input or **unaccounted sales**.
 
+</details>
+
+---
+
 ## Recommendations
+<details>
+  <summary>Expand</summary>
 
 1. Increase Order Frequency
 Given the low average of 2 orders per day, the business should consider strategies to increase customer engagement and frequency. This could be achieved through:
@@ -379,3 +386,5 @@ The negative stock issue with pizza dough (-222%) highlights a need for:
 
 7. Geographic Targeting 🌎:
 Given that the customer base is well-distributed across the U.S., but denser near the headquarters in Maryland, organizing campaigns based on regional preferences can help promote sales in areas with lower engagement.
+
+# Thank You🎆! for taking the time to read through my project. God bless🙏!
