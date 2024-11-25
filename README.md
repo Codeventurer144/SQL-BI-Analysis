@@ -349,8 +349,6 @@ From the first page of visualizations, the following insights were discovered:
 
 </details>
 
----
-
 ## Recommendations
 <details>
   <summary>Expand</summary>
