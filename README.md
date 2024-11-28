@@ -60,7 +60,7 @@ I used DrawSQL to design the database and generate the DDL for MySQL Workbench. 
 
 ---
 
-### Table JOINs and Column Calculations
+### Table JOINs and Column Statistics
 <details>
   <summary>Expand</summary>
 
