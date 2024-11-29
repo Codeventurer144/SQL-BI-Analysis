@@ -1,4 +1,4 @@
-# Creating and Analyzing a Pizza Joint Database
+# Creating and Analyzing a Sales Database
 ![](pizzaBoxes.png)
 
 ## Introduction
