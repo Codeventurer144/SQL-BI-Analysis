@@ -321,8 +321,6 @@ Using Power BI, I connected to MySql and loaded the first table using the custom
 
 
 ## Findings
-<details>
-  <summary>Expand</summary>
 
 Disclaimer: Before going into the findings it is important to reiterate that the data used for this project was AI-generated. As such, certain insights or results may not align with typical real-world expectations and should be interpreted accordingly🙏.
 
@@ -346,8 +344,6 @@ From the first page of visualizations, the following insights were discovered:
 - The inventory visualization reveals that most items are well-stocked, with approximately 95% availability, indicating efficient inventory management.
 - Donair Meat and Mozzarella Cheese are however low in stock, each below 50%, indicating a need for replenishment soon to meet ongoing demand.
 - The Pizza Dough inventory shows a -222% remaining stock, which suggests an issue with inventory tracking. This negative percentage could have been caused by a miscount of inventory movements, possibly due to an incorrect initial stock input or **unaccounted sales**.
-
-</details>
 
 ## Recommendations
 <details>
