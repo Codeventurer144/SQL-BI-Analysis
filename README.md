@@ -8,7 +8,7 @@ In this project, I used Microsoft Excel, DrawSQL, MySQL Workbench, Power Query E
 The data was sourced from Kaggle.com via [this page](https://www.kaggle.com/datasets/jaspearson/pizzeria-data-for-4-weeks), which contains seven CSV files about a pizzeria. The datasets are AI-generated, as stated by the publisher, and not based on real-world data. Initially, the CSV files were unsuitable for SQL querying due to poor normalization and inconsistent "id" values. Using Microsoft Excel functions, I normalized the data and removed unnecessary fields. The details of the resulting normalized Excel files are described in the scenario below.
 
 ## Scenario
-A client, Samuel Roberts, is opening an international pizza delivery shop. The shop will focus exclusively on delivery and pickup services. He requested a database to capture and store essential business data. This database will help him monitor performance through dashboards I’ll create using Microsoft Power BI. Samuel's focus areas are **Orders** and **Stock Information**. His requirements include the following:
+A client, **Samuel Triden,** is opening an international pizza delivery shop. The shop will focus exclusively on delivery and pickup services. He requested a database to capture and store essential business data. This database will help him monitor performance through dashboards I’ll create using Microsoft Power BI. Triden's focus areas are **Orders** and **Stock Information**. His requirements include the following:
 
 1. Total Orders so far.
 2. Total Sales so far.
@@ -312,9 +312,9 @@ LEFT JOIN  ingredients ing ON ing.ing_id = s2.ing_id
   
 Using Power BI, I connected to MySql and loaded the first table using the custom query method. I still had to calculate some columns to create the desired visualizations. Below are the Visualizations answering the first Ten questions and the last Four questions in the [Scenario](#Scenario):
 
-![](visual1.png)
+![](Triden_Dashboard1.png)
 
-![](visual2.png)
+![](Triden_Dashboard2.png)
 </details>
 
 </details>
@@ -328,7 +328,7 @@ Disclaimer: Before going into the findings it is important to reiterate that the
 
 From the first page of visualizations, the following insights were discovered:
 
-![](visual1.png)
+![](Triden_Dashboard1.png)
 
 - The shop has processed a total of 118 orders within the first two months of operation, averaging 2 orders per day.
 - Despite modest sales numbers, the shop has achieved $14,000 in revenue, with an average of $120 per order. This indicates that customers are willing to spend significantly on each order, suggesting high customer satisfaction and a strong product offering.
@@ -341,7 +341,7 @@ From the first page of visualizations, the following insights were discovered:
 
 ---
 
-![](visual2.png)
+![](Triden_Dashboard2.png)
 
 - The inventory visualization reveals that most items are well-stocked, with approximately 95% availability, indicating efficient inventory management.
 - Donair Meat and Mozzarella Cheese are however low in stock, each below 50%, indicating a need for replenishment soon to meet ongoing demand.
